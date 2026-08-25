@@ -1,35 +1,43 @@
-# Sitemap-testsajt för Seoella
+# Sitemap-discovery testsajt
 
-Statisk testsajt för att verifiera sitemap-discovery och crawl.
+Testyta för ett SEO-verktygs **sitemap-discovery**, hostad på GitHub Pages på
+origin-roten: `https://corneldos.github.io`.
 
-## Struktur / vad den testar
+Det här är en **ren testsajt utan riktigt innehåll** – sidorna och URL:erna finns
+bara för att mata verktyget med kontrollerade fall.
 
-- `index.html` – startsida med `<link rel="sitemap">` i `<head>` (testar steg 3, head-discovery)
-- `page-a..e.html` – 5 innehållssidor
-- `robots.txt` – pekar ut `sitemap.xml` (testar robots-discovery)
-- `sitemap.xml` – sitemap-INDEX som pekar på två under-sitemaps (testar index-följning)
-- `sitemap-pages.xml` – 4 URL:er: `/`, page-a, page-b, page-c
-- `sitemap-extra.xml` – 3 URL:er: page-d, page-e, OCH page-c igen (medveten dubblett)
-- `.nojekyll` – så GitHub Pages serverar `.xml` rått utan Jekyll
+## Vad som testas
 
-## Rätt svar (facit)
+Att verktygets sitemap-discovery:
 
-Unika URL:er i sitemapen = **6**: `/`, page-a, page-b, page-c, page-d, page-e.
-page-c finns i BÅDA under-sitemaps → cross-sitemap-dedup ska ge 6, inte 7.
-Faktiska sidor på sajten = 6 (start + 5).
+- hittar sitemaps via alla tre vägar: `robots.txt` (`Sitemap:`-rad),
+  `<head>` (`<link rel="sitemap">`) och gissade standardplatser
+  (`/sitemap.xml`, `/sitemap_index.xml`, `/wp-sitemap.xml` m.fl.),
+- följer sitemap-**index** ner till under-sitemaps (även nästlat),
+- **deduplicerar** URL:er över flera sitemaps, och
+- **inte blåser upp** antalet från trasig XML eller HTML-sidor som utger sig
+  för att vara sitemaps.
 
-## Så här deployar du
+## Struktur
 
-1. Skapa ett nytt publikt repo på GitHub, t.ex. `sitemap-test`.
-2. `./set-base.sh <användare>.github.io/sitemap-test`  (byter ut platshållaren)
-3. Pusha alla filer till `main`.
-4. Repo → Settings → Pages → Source: `main` / `/ (root)` → Save.
-5. Vänta ~1 min. Sajten ligger på `https://<användare>.github.io/sitemap-test/`
-6. Verifiera: öppna `.../sitemap.xml` i webbläsaren, den ska visa XML.
+- **Rot-fallet** – `robots.txt` → `sitemap.xml` (index) → två under-sitemaps med
+  en medveten dubblett. Facit: **6 unika URL:er**.
+- **12 isolerade testfall** i egna undermappar (`case-*/`), var och en
+  självständig med egen `robots.txt` och `index.html` så att den kan testas
+  isolerat.
 
-## Testfall du kan skapa sen (genom att ändra filerna)
+Full lista med URL:er att mata in och facit (förväntat antal unika URL:er /
+beteende) finns i **[TESTFALL.md](TESTFALL.md)**.
 
-- Lägg till fler `<url>` → se att estimat/crawl följer med
-- Trasig XML i en under-sitemap → testar steg 2 (0 loc + warn)
-- Ta bort `<head>`-länken → se att robots/guess ändå hittar den
-- Ta bort robots-raden → se att head/guess ändå hittar den
+## Not om robots.txt-isolering
+
+Att varje undermapp har en egen `robots.txt` förutsätter att det testande
+verktyget läser `robots.txt` **relativt inmatad sökväg**. Läser verktyget
+`robots.txt` **enbart** på origin-roten gäller i stället rot-`robots.txt`, som
+innehåller rot-fallets `Sitemap:`-rad plus case-8:s tre rader. (Samma not som i
+[TESTFALL.md](TESTFALL.md).)
+
+## Serving
+
+`.nojekyll` i roten gör att GitHub Pages serverar `.xml`-filerna rått, utan
+Jekyll-bearbetning.
