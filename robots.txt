@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://corneldos.github.io/sitemap-test/sitemap.xml
+Sitemap: https://corneldos.github.io/sitemap.xml
