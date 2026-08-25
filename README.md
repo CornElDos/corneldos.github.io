@@ -22,9 +22,11 @@ Att verktygets sitemap-discovery:
 
 - **Rot-fallet** – `robots.txt` → `sitemap.xml` (index) → två under-sitemaps med
   en medveten dubblett. Facit: **6 unika URL:er**.
-- **12 isolerade testfall** i egna undermappar (`case-*/`), var och en
+- **14 isolerade testfall** i egna undermappar (`case-*/`), var och en
   självständig med egen `robots.txt` och `index.html` så att den kan testas
-  isolerat.
+  isolerat. Två av dem exponerar dedup-buggar: `case-multi-topsitemap-overlap/`
+  (två fristående topp-sitemaps som delar en URL) och `case-inner-trailing-slash/`
+  (URL-varianter av samma sida inuti en sitemap).
 
 Full lista med URL:er att mata in och facit (förväntat antal unika URL:er /
 beteende) finns i **[TESTFALL.md](TESTFALL.md)**.

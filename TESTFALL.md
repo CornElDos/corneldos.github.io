@@ -38,6 +38,8 @@ Discovery-vägar som testas:
 | 10 | relative-loc | `https://corneldos.github.io/case-relative-loc/` | **Spec-brott** (spec kräver absoluta `<loc>`). Strikt verktyg → **0**; tolerant verktyg som resolvar mot sitemap-URL → **3**. Dokumentera vilket ditt gör. |
 | 11 | large | `https://corneldos.github.io/case-large/` | **1000** unika. Volymtest att antalet stämmer. |
 | 12 | empty-sitemap | `https://corneldos.github.io/case-empty-sitemap/` | **0**, **inget fel** (välformad `urlset` med 0 `<url>`). |
+| 13 | multi-topsitemap-overlap | `https://corneldos.github.io/case-multi-topsitemap-overlap/` | **5** unika. TVÅ *fristående* topp-sitemaps (ej index): `sitemap-a.xml` (p1,p2,p3) + `sitemap-b.xml` (p3,p4,p5), delar p3 → naiv summa **6**, union **5**. Exponerar cross-sitemap-dubbelräkning (bugg #5) som ett *enda* index inte gör. |
+| 14 | inner-trailing-slash | `https://corneldos.github.io/case-inner-trailing-slash/` | **3** unika efter normalisering (naiv **6**). En giltig sitemap där sido-URL:erna *inuti* har trailing-slash-, path-case- och host-case-varianter av samma sida. Testar normalisering av URL:erna inuti sitemapen (skilt från fil-URL:en). |
 
 ## Detaljer per fall
 
@@ -83,7 +85,20 @@ Discovery-vägar som testas:
 ### 12. empty-sitemap
 - `sitemap.xml` = välformad `<urlset>` utan några `<url>`.
 
+### 13. multi-topsitemap-overlap
+- **Två fristående topp-sitemaps på samma nivå** (inget index): `sitemap-a.xml` (p1,p2,p3) och `sitemap-b.xml` (p3,p4,p5), delar `p3`.
+- Båda pekas ut via `case-multi-topsitemap-overlap/robots.txt` (två `Sitemap:`-rader).
+- Skiljer sig från fall 7: här sker överlappet mellan **två separat upptäckta topp-sitemaps**, inte inom ett index. Facit: union **5**, naiv summa **6**. Exponerar cross-sitemap-dubbelräkning (bugg #5).
+
+### 14. inner-trailing-slash
+- En enda giltig `sitemap.xml` där `<loc>`-URL:erna inuti har varianter av samma sida:
+  - `produkt`: `/produkt`, `/produkt/` (trailing slash), `/Produkt` (path-case)
+  - `artikel`: `https://CornelDos.github.io/…/artikel` + `…corneldos…/artikel` (host-case)
+  - `om`: en unik
+- 6 rader → **3** unika efter full normalisering (host-case + path-case + trailing slash). Testar normalisering av URL:erna **inuti** sitemapen, skilt från fil-URL:en.
+- Not: host-case är alltid säkert att normalisera; path-case (`/Produkt`) är tekniskt signifikant per RFC, så ett strikt verktyg kan ge fler. Önskat facit: **3**.
+
 ---
 
 **Summa förväntade unika (per isolerat fall):**
-1→3, 2→3, 3→3, 4→3, 5→0, 6→5, 7→6, 8→6, 9→3, 10→0 *eller* 3, 11→1000, 12→0. Root→6.
+1→3, 2→3, 3→3, 4→3, 5→0, 6→5, 7→6, 8→6, 9→3, 10→0 *eller* 3, 11→1000, 12→0, 13→5, 14→3. Root→6.

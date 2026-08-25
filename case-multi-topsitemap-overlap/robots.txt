@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://corneldos.github.io/case-multi-topsitemap-overlap/sitemap-a.xml
+Sitemap: https://corneldos.github.io/case-multi-topsitemap-overlap/sitemap-b.xml
