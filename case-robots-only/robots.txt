@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://corneldos.github.io/case-robots-only/karta-2024.xml

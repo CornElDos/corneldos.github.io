@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>https://corneldos.github.io/case-broken-xml/riktig-1.html</loc></url>
+  <url><loc>https://corneldos.github.io/case-broken-xml/riktig-2.html</loc></url>
+  <!-- decoy-lankar som ALDRIG ska raknas som sitemap-URL:er -->
+  <a href="https://corneldos.github.io/case-broken-xml/lura-mig-1.html">Lank 1</a>
+  <a href="https://corneldos.github.io/case-broken-xml/lura-mig-2.html">Lank 2</a>
+  <url><loc>https://corneldos.github.io/case-broken-xml/riktig-3.html</loc>

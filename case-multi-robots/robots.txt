@@ -1,9 +1,6 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://corneldos.github.io/sitemap.xml
-
-# case-multi-robots (case 8): flera Sitemap-rader ska alla plockas upp
 Sitemap: https://corneldos.github.io/case-multi-robots/sitemap-1.xml
 Sitemap: https://corneldos.github.io/case-multi-robots/sitemap-2.xml
 Sitemap: https://corneldos.github.io/case-multi-robots/sitemap-3.xml

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+<meta charset="utf-8">
+<title>404 - Sidan hittades inte</title>
+</head>
+<body>
+<h1>404 - Hoppsan!</h1>
+<p>Den har sidan finns inte. Prova nagon av dessa:</p>
+<ul>
+  <li><a href="/case-html-as-sitemap/lank-1.html">Lank 1</a></li>
+  <li><a href="/case-html-as-sitemap/lank-2.html">Lank 2</a></li>
+  <li><a href="/case-html-as-sitemap/lank-3.html">Lank 3</a></li>
+  <li><a href="/case-html-as-sitemap/lank-4.html">Lank 4</a></li>
+  <li><a href="/case-html-as-sitemap/lank-5.html">Lank 5</a></li>
+  <li><a href="/case-html-as-sitemap/lank-6.html">Lank 6</a></li>
+  <li><a href="/case-html-as-sitemap/lank-7.html">Lank 7</a></li>
+  <li><a href="/case-html-as-sitemap/lank-8.html">Lank 8</a></li>
+</ul>
+</body>
+</html>
